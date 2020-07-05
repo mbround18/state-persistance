@@ -1,14 +1,4 @@
-# Using a single workspace:
-terraform {
-  backend "remote" {
-    hostname = "app.terraform.io"
-    organization = "company"
 
-    workspaces {
-      name = "my-app-prod"
-    }
-  }
-}
 
 provider "aws" {  
   region                      = var.aws_region

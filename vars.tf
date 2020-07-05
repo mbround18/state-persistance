@@ -1,6 +1,13 @@
+variable "project" {
+    type        = string
+    default     = "boop-ninja"
+    description = "Project Name"
+}
+
+
 variable "aws_region" {
     type        = string
-    default     = "us-east-1"
+    default     = "us-west-2"
     description = "Sets the region used in AWS"
 }
 
@@ -15,12 +22,6 @@ variable "use_localstack" {
     type        = bool
     default     = true
     description = "Whether or not to use localstack. If false it will attempt to deploy live."
-}
-
-variable "project" {
-    type        = string
-    default     = "boop-ninja"
-    description = "Project Name"
 }
 
 #---------------------------------------------------------------------------------------------------

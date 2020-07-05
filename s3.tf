@@ -1,6 +1,7 @@
 # Original content pulled from https://github.com/nozaq/terraform-aws-remote-state-s3-backend
 
 locals {
+  bucket_name = "${var.project}-s3-${var.bucket_name}"
   define_lifecycle_rule = var.noncurrent_version_expiration != null || length(var.noncurrent_version_transitions) > 0
 }
 
@@ -12,7 +13,7 @@ resource "aws_kms_key" "this" {
   deletion_window_in_days = var.kms_key_deletion_window_in_days
   enable_key_rotation     = var.kms_key_enable_key_rotation
 
-  tags = var.tags
+  tags = local.global_tags
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -22,7 +23,7 @@ data "aws_region" "state" {
 }
 
 resource "aws_s3_bucket" "state" {
-  bucket        = "bipsli-terraform"
+  bucket        = local.bucket_name
   bucket_prefix = var.state_bucket_prefix
   acl           = "private"
   force_destroy = var.s3_bucket_force_destroy
@@ -63,7 +64,7 @@ resource "aws_s3_bucket" "state" {
     }
   }
 
-  tags = var.tags
+  tags = local.global_tags
 }
 
 resource "aws_s3_bucket_public_access_block" "state" {
