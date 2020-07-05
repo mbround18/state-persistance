@@ -1,7 +1,7 @@
 # Original content pulled from https://github.com/nozaq/terraform-aws-remote-state-s3-backend
 
 locals {
-  bucket_name = "${var.project}-s3-${var.bucket_name}"
+  bucket_prefix = "${var.project}-s3-"
   define_lifecycle_rule = var.noncurrent_version_expiration != null || length(var.noncurrent_version_transitions) > 0
 }
 
@@ -23,8 +23,7 @@ data "aws_region" "state" {
 }
 
 resource "aws_s3_bucket" "state" {
-  bucket        = local.bucket_name
-  bucket_prefix = var.state_bucket_prefix
+  bucket_prefix = local.bucket_prefix
   acl           = "private"
   force_destroy = var.s3_bucket_force_destroy
 
